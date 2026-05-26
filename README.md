@@ -11,44 +11,45 @@ Live site: <https://janeliascicomp.github.io/dyebioavailability-website/>
 ├── index.html       # Zarrcade SPA entry point (prebuilt)
 ├── config.json      # Site configuration: title, columns, filters, viewers, branding
 ├── assets/          # Hashed JS/CSS/font bundles
-├── icons/           # Viewer icons + fallback thumbnail
-├── content/         # Curator-managed assets served via HTTP (see below)
-│   ├── zarrcade.csv     # Image manifest
-│   └── branding/        # Site-specific logos (T3, HHMI Janelia)
+├── icons/           # Viewer icons + fallback thumbnail (from @janelia/zarrcade)
+├── branding/        # Site-specific logos (T3, HHMI Janelia) — deployed with the SPA
+├── content/         # Version-controlled backup of the data served at dataUrl
+│   └── zarrcade.csv
 └── .github/workflows/pages.yml   # CI deploy to GitHub Pages
 ```
 
-### How `content/` is served
+### About `content/`
 
-`content/` is the canonical, version-controlled mirror of everything the SPA
-loads at runtime (CSV + branding images). It is **not** served by GitHub Pages
-— the SPA fetches it over HTTP from a separate static host (currently S3),
-**relative to `dataUrl`** in `config.json`.
-
-The contract is: the directory containing `dataUrl` on the host must match
-the layout of `content/` here. Today `dataUrl` is
+`content/` is a **backup** of what's actually deployed at the `dataUrl`
+location. The live site does *not* read from `content/` — it fetches over
+HTTP from the URL in `config.json`:
 
   <https://s3.janelia.org/lavis-lab/Dye_Bioavailability_images/Website/zarrcade.csv>
 
-so the SPA will look for branding logos at
+S3 is the source of truth for what users see. `content/` exists so the
+repo carries a version-controlled snapshot of that data — useful for
+diffing, recovery, and reproducibility — but uploading a new file to
+`content/` alone does **nothing** for the live site until you also upload
+it to `s3://lavis-lab/Dye_Bioavailability_images/Website/`.
 
-  https://s3.janelia.org/lavis-lab/Dye_Bioavailability_images/Website/branding/T3-Logo.png
-
-and so on. Anything new you drop into `content/` must be uploaded to the
-same S3 prefix (`s3://lavis-lab/Dye_Bioavailability_images/Website/`) for
-the live site to see it.
+Branding images are different — they live in `branding/` at the repo
+root and ship with the GitHub Pages bundle, so they don't need to be on
+S3 at all.
 
 ## Updating the site
 
-- **New columns / filters / branding tweaks:** edit `config.json` and push to
-  `main`. The Pages workflow redeploys automatically.
-- **New data or branding assets:** add the files under `content/`, commit,
-  AND upload the same files to `s3://lavis-lab/Dye_Bioavailability_images/Website/`.
-  The repo and S3 must stay in sync; commits alone won't reach the SPA.
+- **Config / filters / branding tweaks:** edit `config.json` (or files
+  under `branding/`) and push to `main`. The Pages workflow redeploys
+  automatically.
+- **New data:** upload the regenerated `zarrcade.csv` to
+  `s3://lavis-lab/Dye_Bioavailability_images/Website/` AND update the
+  backup at `content/zarrcade.csv` so the repo doesn't drift. The S3
+  upload is what users see.
 - **Newer Zarrcade release:** re-run
   `npx @janelia/zarrcade init <tmp>` against the new package version,
-  then copy `<tmp>/{index.html,assets,icons}` over the files here. Leave
-  `config.json`, `content/`, and the workflow in place.
+  then copy `<tmp>/{index.html,assets,icons}` over the files here.
+  Leave `config.json`, `branding/`, `content/`, and the workflow in
+  place.
 
 ## Local preview
 
