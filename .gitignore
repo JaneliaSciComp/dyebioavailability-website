@@ -1,6 +1,10 @@
-# Data files — fetched at runtime from S3, never committed.
+# Stray data files outside content/ are kept out of the repo; the canonical
+# CSV/TSV manifest lives under content/ and IS committed (and separately
+# mirrored to S3 so the SPA can fetch it).
 *.csv
 *.tsv
+!content/*.csv
+!content/*.tsv
 
 # Local dev override (for testing alternate configs without touching config.json).
 config.local.json

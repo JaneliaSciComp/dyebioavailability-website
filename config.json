@@ -1,5 +1,5 @@
 {
-  "dataUrl": "https://s3.janelia.org/lavis-lab/Dye_Bioavailability_images/zarrcade.csv",
+  "dataUrl": "https://s3.janelia.org/lavis-lab/Dye_Bioavailability_images/Website/zarrcade.csv",
   "title": "Dye Bioavailability",
   "data": {
     "delimiter": ",",
@@ -44,12 +44,12 @@
     "headerBg": "#000",
     "footerBg": "#000",
     "headerLeftLogo": {
-      "src": "ext/T3-Logo.png",
+      "src": "branding/T3-Logo.png",
       "href": "https://www.janelia.org/project-team/tool-translation-team-t3",
       "alt": "T3 Lab"
     },
     "headerRightLogo": {
-      "src": "ext/HHMI_Janelia_Logo_Black_Background.png",
+      "src": "branding/HHMI_Janelia_Logo_Black_Background.png",
       "href": "https://www.janelia.org",
       "alt": "HHMI Janelia"
     },
