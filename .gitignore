@@ -1,0 +1,11 @@
+# Data files — fetched at runtime from S3, never committed.
+*.csv
+*.tsv
+
+# Local dev override (for testing alternate configs without touching config.json).
+config.local.json
+
+# Editor / OS junk.
+.DS_Store
+Thumbs.db
+*.swp

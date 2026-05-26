@@ -1,0 +1,42 @@
+name: Deploy to GitHub Pages
+
+# Deploys the static site to GitHub Pages on every push to main, and
+# allows manual re-deploys from the Actions tab.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# One in-flight deploy at a time; cancel queued deploys when a newer
+# push lands so we don't ship stale builds.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # The repo IS the site — everything at the root (index.html,
+          # config.json, assets/, icons/, ext/) gets deployed.
+          path: .
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
