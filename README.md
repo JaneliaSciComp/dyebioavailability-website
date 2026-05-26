@@ -2,7 +2,7 @@
 
 [Zarrcade](https://github.com/JaneliaSciComp/zarrcade)-based web site for the Lavis Lab's dye bioavailability image collection.
 
-Live site: <https://janeliascicomp.github.io/dyebioavailability-website/>
+Live site: <https://dyebioavailability.janelia.org/>
 
 ## What's in here
 
