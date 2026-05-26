@@ -1,8 +1,8 @@
 # Dye Bioavailability
 
-[Zarrcade](https://github.com/JaneliaSciComp/zarrcade)-based browser for the LavisLab dye bioavailability image collection.
+[Zarrcade](https://github.com/JaneliaSciComp/zarrcade)-based web site for the Lavis Lab's dye bioavailability image collection.
 
-Live site (after Pages is enabled): <https://janeliascicomp.github.io/dyebioavailability-website/>
+Live site: <https://janeliascicomp.github.io/dyebioavailability-website/>
 
 ## What's in here
 
@@ -64,11 +64,3 @@ and add a `config.local.json` (gitignored) overriding `dataUrl`:
 { "dataUrl": "./local-snapshot.csv" }
 ```
 
-## Enabling GitHub Pages
-
-One-time setup on github.com → repository **Settings → Pages**:
-
-- **Source:** "GitHub Actions" (not "Deploy from a branch").
-
-Once that's set, every push to `main` runs `.github/workflows/pages.yml`
-and the site goes live at the URL above within a minute.
