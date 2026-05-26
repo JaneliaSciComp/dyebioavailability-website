@@ -1,5 +1,5 @@
 {
-  "dataUrl": "https://s3.janelia.org/lavis-lab/Dye_Bioavailability_images/Website/zarrcade.csv",
+  "dataUrl": "https://s3.janelia.org/lavis-lab/Dye_Bioavailability_images/zarrcade.csv",
   "title": "Dye Bioavailability",
   "data": {
     "delimiter": ",",

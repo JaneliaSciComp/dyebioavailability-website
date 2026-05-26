@@ -24,13 +24,13 @@ Live site: <https://janeliascicomp.github.io/dyebioavailability-website/>
 location. The live site does *not* read from `content/` — it fetches over
 HTTP from the URL in `config.json`:
 
-  <https://s3.janelia.org/lavis-lab/Dye_Bioavailability_images/Website/zarrcade.csv>
+  <https://s3.janelia.org/lavis-lab/Dye_Bioavailability_images/zarrcade.csv>
 
 S3 is the source of truth for what users see. `content/` exists so the
 repo carries a version-controlled snapshot of that data — useful for
 diffing, recovery, and reproducibility — but uploading a new file to
 `content/` alone does **nothing** for the live site until you also upload
-it to `s3://lavis-lab/Dye_Bioavailability_images/Website/`.
+it to `s3://lavis-lab/Dye_Bioavailability_images/`.
 
 Branding images are different — they live in `branding/` at the repo
 root and ship with the GitHub Pages bundle, so they don't need to be on
@@ -42,9 +42,9 @@ S3 at all.
   under `branding/`) and push to `main`. The Pages workflow redeploys
   automatically.
 - **New data:** upload the regenerated `zarrcade.csv` to
-  `s3://lavis-lab/Dye_Bioavailability_images/Website/` AND update the
-  backup at `content/zarrcade.csv` so the repo doesn't drift. The S3
-  upload is what users see.
+  `s3://lavis-lab/Dye_Bioavailability_images/` AND update the backup at
+  `content/zarrcade.csv` so the repo doesn't drift. The S3 upload is
+  what users see.
 - **Newer Zarrcade release:** re-run
   `npx @janelia/zarrcade init <tmp>` against the new package version,
   then copy `<tmp>/{index.html,assets,icons}` over the files here.
